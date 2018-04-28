@@ -9,7 +9,8 @@ namespace seleniumProject
     public class UnitTest1
     {
         //IWebDriver Browser = new OpenQA.Selenium.Chrome.ChromeDriver();
-        IWebDriver Browser = new OpenQA.Selenium.Firefox.FirefoxDriver();
+        //IWebDriver Browser = new OpenQA.Selenium.Firefox.FirefoxDriver();
+        IWebDriver Browser = new OpenQA.Selenium.IE.InternetExplorerDriver();
 
         [TestInitialize]
         public void Initialize()
