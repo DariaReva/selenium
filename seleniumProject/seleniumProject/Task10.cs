@@ -15,12 +15,6 @@ namespace seleniumProject
         {
             Browser.Manage().Window.Maximize();
         }
-
-        public void Check (String a, String b)
-        {
-            if (a != b)
-                throw new Exception();
-        }
        
         [TestMethod]
         public void TestMethod4()
@@ -42,7 +36,7 @@ namespace seleniumProject
 
             item.Click();
 
-            Check(Pointer, "http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1");
+            Assert.AreEqual(Pointer, "http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1");
 
             IWebElement NewItem = Browser.FindElement(By.XPath(".//*[@id='box-product']/div[1]/h1"));
             string Name = NewItem.GetAttribute("textContent");
@@ -57,13 +51,14 @@ namespace seleniumProject
             string CampaignColor = Campaign.GetAttribute("color");
             string CampaignStyle = Campaign.GetAttribute("text-decoration");
 
-            Check(MainName, Name);
-            Check(MainPriceText, PriceText);
-            Check(MainPriceColor, PriceColor);
-            Check(MainPriceStyle, PriceStyle);
-            Check(MainCampaignText, CampaignText);
-            Check(MainCampaignColor, CampaignColor);
-            Check(MainCampaignStyle, CampaignStyle);
+            Assert.AreEqual(MainName, Name);
+            Assert.AreEqual(MainName, Name);
+            Assert.AreEqual(MainPriceText, PriceText);
+            Assert.AreEqual(MainPriceColor, PriceColor);
+            Assert.AreEqual(MainPriceStyle, PriceStyle);
+            Assert.AreEqual(MainCampaignText, CampaignText);
+            Assert.AreEqual(MainCampaignColor, CampaignColor);
+            Assert.AreEqual(MainCampaignStyle, CampaignStyle);
 
         }
         [TestCleanup]
