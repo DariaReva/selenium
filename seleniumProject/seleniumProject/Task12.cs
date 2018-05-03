@@ -22,6 +22,11 @@ namespace seleniumProject
                 throw new Exception();
         }
 
+        bool AreElementsPresent(IWebDriver driver, By locator)
+        {
+            return driver.FindElements(locator).Count > 0;
+        }
+
         [TestMethod]
         public void TestMethod6()
         {
@@ -43,6 +48,8 @@ namespace seleniumProject
             input = Browser.FindElement(By.XPath(".//*[@id='content']/div[1]/a[2]"));
             input.Click();
 
+            input = Browser.FindElement(By.XPath(".//*[@id='tab-general']/table/tbody/tr[1]/td/label[1]/input"));
+            input.Click();
             input = Browser.FindElement(By.XPath(".//*[@id='tab-general']/table/tbody/tr[2]/td/span/input"));
             input.SendKeys("Name");
             input = Browser.FindElement(By.XPath(".//*[@id='tab-general']/table/tbody/tr[3]/td/input"));
@@ -65,10 +72,23 @@ namespace seleniumProject
             input = Browser.FindElement(By.XPath(".//*[@id='tab-information']/table/tbody/tr[6]/td/span/input"));
             input.SendKeys("Title");
 
-            input = Browser.FindElement(By.XPath(""));
+            input = Browser.FindElement(By.XPath(".//*[@id='content']/form/div/ul/li[4]/a"));
+            input.Click();
 
+            input = Browser.FindElement(By.XPath(".//*[@id='tab-prices']/table[1]/tbody/tr/td/input"));
+            input.Clear();
+            input.SendKeys("15");
+            input = Browser.FindElement(By.XPath(".//*[@id='tab-prices']/table[1]/tbody/tr/td/select"));
+            input.Click();
+            input = Browser.FindElement(By.CssSelector("[value *= 'EUR']"));
+            input.Click();
+            input = Browser.FindElement(By.XPath(".//*[@id='tab-prices']/table[3]/tbody/tr[2]/td[2]/input"));
+            input.SendKeys("26");
 
+            IWebElement input1 = Browser.FindElement(By.XPath(".//*[@id='content']/form/p/span/button[1]"));
+            input1.Click();
 
+            AreElementsPresent(Browser, By.XPath(".//*[@id='content']/form/table/tbody/tr[4]/td[3]"));
         }
         [TestCleanup]
         public void Quit()
