@@ -47,7 +47,7 @@ namespace seleniumProject
         [TestCleanup]
         public void Quit()
         {
-            //Browser.Quit();
+            Browser.Quit();
         }
     }
 }
