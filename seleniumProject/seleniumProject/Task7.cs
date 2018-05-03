@@ -15,7 +15,11 @@ namespace seleniumProject
         {
             Browser.Manage().Window.Maximize();
         }
-        
+        bool AreElementsPresent(IWebDriver driver, By locator)
+        {
+            return driver.FindElements(locator).Count > 0;
+        }
+
         [TestMethod]
         public void TestMethod2()
         {
@@ -31,14 +35,13 @@ namespace seleniumProject
             IWebElement enter = Browser.FindElement(By.Name("login"));
             enter.Click();
 
-            IList<IWebElement> menu = Browser.FindElements(By.XPath(".//*[@id='app-']/a"));
+            IList<IWebElement> menu = Browser.FindElement(By.Id("box-apps-menu")).FindElements(By.TagName("a"));
+            string[] HrefObj = new string[menu.Count];
+            for (int i = 0; i < menu.Count; i++)
+                HrefObj[i] = menu[i].GetAttribute("href");
             for (int i = 0; i < menu.Count; i++)
             {
-                menu[i].Click();
-                IList<IWebElement> element = Browser.FindElements(By.CssSelector("[href*='http://localhost/litecart/admin/?app=']"));
-                for (int j = 0; j < element.Count; j++)
-                    element[j].Click();
-                Browser.Navigate().GoToUrl("http://localhost/litecart/admin/");
+                Browser.Navigate().GoToUrl(HrefObj[i]);
             }
         }
         [TestCleanup]
