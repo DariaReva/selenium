@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System.Collections.Generic;
 
 namespace seleniumProject
@@ -8,17 +9,15 @@ namespace seleniumProject
     [TestClass]
     public class Task7
     {
-        IWebDriver Browser = new OpenQA.Selenium.Firefox.FirefoxDriver();
+        IWebDriver Browser; 
 
         [TestInitialize]
         public void Initialize()
         {
+            Browser = new FirefoxDriver();
             Browser.Manage().Window.Maximize();
         }
-        bool AreElementsPresent(IWebDriver driver, By locator)
-        {
-            return driver.FindElements(locator).Count > 0;
-        }
+      
 
         [TestMethod]
         public void TestMethod2()
