@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 
 namespace seleniumProject
@@ -8,34 +9,32 @@ namespace seleniumProject
     [TestClass]
     public class Task8
     {
-        IWebDriver Browser = new OpenQA.Selenium.Firefox.FirefoxDriver();
+        IWebDriver Browser; 
 
         [TestInitialize]
         public void Initialize()
         {
+            Browser = new ChromeDriver();
             Browser.Manage().Window.Maximize();
         }
-        bool AreElementsPresent(IWebDriver driver, By locator)
+        bool IsElementPresent(IWebElement driver, By locator)
         {
-            return driver.FindElements(locator).Count > 0;
+            return driver.FindElements(locator).Count == 1;
         }
 
         [TestMethod]
-        public void TestMethod3()
+        public void Test8()
         {
             Browser.Navigate().GoToUrl("http://localhost/litecart/en/");
-            
-            IList<IWebElement> NewItem = Browser.FindElement(By.XPath(".//*[@id='main']/div[2]/div[2]")).FindElements(By.CssSelector("[class *= 'new']"));
-            IList<IWebElement> SaleItem = Browser.FindElement(By.XPath(".//*[@id='main']/div[2]/div[2]")).FindElements(By.CssSelector("[class *= 'sale']"));
-            IList<IWebElement> Item = Browser.FindElement(By.XPath(".//*[@id='main']/div[2]/div[2]")).FindElements(By.ClassName("image"));
 
+            IList<IWebElement> Product = Browser.FindElements(By.XPath(".//li[contains(@class, 'product')]"));
 
-            int StickerCount = NewItem.Count + SaleItem.Count;
-            int ItemCount = Item.Count;
+            for (int i = 0; i < Product.Count; i++)
+            {
+                if (IsElementPresent(Product[i], By.XPath(".//div[contains(@class, 'sticker')]")) != true)
+                    Assert.Fail();
+            }
 
-            if (StickerCount != ItemCount)
-                throw new Exception();
-            
         }
         [TestCleanup]
         public void Quit()

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 
 namespace seleniumProject
@@ -14,13 +14,13 @@ namespace seleniumProject
         [TestInitialize]
         public void Initialize()
         {
-            Browser = new FirefoxDriver();
+            Browser = new ChromeDriver();
             Browser.Manage().Window.Maximize();
         }
       
 
         [TestMethod]
-        public void TestMethod2()
+        public void Test7()
         {
             Browser.Navigate().GoToUrl("http://localhost/litecart/admin/");
             IWebElement input_login = Browser.FindElement(By.Name("username"));
@@ -35,9 +35,10 @@ namespace seleniumProject
             enter.Click();
 
             IList<IWebElement> menu = Browser.FindElement(By.XPath(".//*[@id='box-apps-menu-wrapper']")).FindElements(By.TagName("a"));
-            string[] HrefObj = new string[menu.Count];
-            for (int i = 0; i < menu.Count; i++)
-                HrefObj[i] = menu[i].GetAttribute("href");
+            List<string> HrefObj = new List<string>();
+            foreach (var element in menu)
+                HrefObj.Add(element.GetAttribute("href"));
+            
             for (int i = 0; i < menu.Count; i++)
                 Browser.Navigate().GoToUrl(HrefObj[i]);
         }
