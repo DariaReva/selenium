@@ -34,13 +34,21 @@ namespace seleniumProject
             IWebElement enter = Browser.FindElement(By.Name("login"));
             enter.Click();
 
-            IList<IWebElement> menu = Browser.FindElement(By.XPath(".//*[@id='box-apps-menu-wrapper']")).FindElements(By.TagName("a"));
+            IList<IWebElement> menu = Browser.FindElements(By.XPath(".//*[@id='box-apps-menu-wrapper']//a"));
             List<string> HrefObj = new List<string>();
             foreach (var element in menu)
                 HrefObj.Add(element.GetAttribute("href"));
-            
+
             for (int i = 0; i < menu.Count; i++)
+            {
                 Browser.Navigate().GoToUrl(HrefObj[i]);
+                IList<IWebElement> menu1 = Browser.FindElements(By.XPath(".//*[@id = 'app-']//*[contains(@id, 'doc-')]"));
+                List<string> HrefObj1 = new List<string>();
+                foreach (var element1 in menu1)
+                    HrefObj1.Add(element1.GetAttribute("href"));
+                for (int j = 0; j < menu1.Count; j++)
+                    Browser.Navigate().GoToUrl(HrefObj1[j]);
+            }
         }
         [TestCleanup]
         public void Quit()

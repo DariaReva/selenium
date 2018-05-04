@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 
 namespace seleniumProject
@@ -8,11 +9,12 @@ namespace seleniumProject
     [TestClass]
     public class Task13
     {
-        IWebDriver Browser = new OpenQA.Selenium.Firefox.FirefoxDriver();
+        IWebDriver Browser;
 
         [TestInitialize]
         public void Initialize()
         {
+            Browser = new ChromeDriver();
             Browser.Manage().Window.Maximize();
         }
 
