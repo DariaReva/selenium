@@ -51,6 +51,22 @@ namespace seleniumProject
                 Assert.Fail("Wrong style");
         }
 
+        public void CheckFontSize (string font1, string font2)
+        {
+            List<string> sub1 = new List<string>(font1.Split('.'));
+            List<int> size1 = new List<int>();
+            foreach (var element in sub1)
+                size1.Add(Convert.ToInt32(Regex.Replace(element, @"[^\d]+", "")));
+
+            List<string> sub2 = new List<string>(font2.Split('.'));
+            List<int> size2 = new List<int>();
+            foreach (var element in sub2)
+                size2.Add(Convert.ToInt32(Regex.Replace(element, @"[^\d]+", "")));
+
+            if (size1[0] >= size2[0])
+                Assert.Fail("Wrong size");
+        }
+
         [TestMethod]
         public void Test10()
         {
@@ -68,7 +84,7 @@ namespace seleniumProject
             string MainPriceStyle = MainPrice.GetCssValue("text-decoration");
             CheckTextDecoration(MainPriceStyle, "line-through");
 
-            double PriceSize = Convert.ToInt32(Regex.Replace(MainPrice.GetCssValue("font-size"), @"[^\d]+", "")); //исправить преобразование
+            string MainPriceSize = MainPrice.GetCssValue("font-size");
 
             IWebElement MainCampaign = Browser.FindElement(By.XPath(".//strong[contains(@class, 'price')]"));
             string MainCampaignText = MainCampaign.GetAttribute("textContent");
@@ -76,8 +92,12 @@ namespace seleniumProject
             string MainCampaignColor = MainCampaign.GetCssValue("color");
             CheckRed(MainCampaignColor);
 
-            string MainCampaignStyle = MainCampaign.GetCssValue("text-decoration");
-            CheckTextDecoration(MainCampaignStyle, "none");
+            string MainCampaignStyle = MainCampaign.GetAttribute("tagName");
+            CheckTextDecoration(MainCampaignStyle, "STRONG");
+
+            string MainCampaignSize = MainCampaign.GetCssValue("font-size");
+
+            CheckFontSize(MainPriceSize, MainCampaignSize);
 
             item.Click();
 
@@ -92,13 +112,17 @@ namespace seleniumProject
             CheckGrey(PriceColor);
             string PriceStyle = Price.GetCssValue("text-decoration");
             CheckTextDecoration(PriceStyle, "line-through");
+            string PriceSize = Price.GetCssValue("font-size");
 
             IWebElement Campaign = Browser.FindElement(By.XPath(".//strong[contains(@class, 'campaign')]"));
             string CampaignText = Campaign.GetAttribute("textContent");
             string CampaignColor = Campaign.GetCssValue("color");
             CheckRed(CampaignColor);
-            string CampaignStyle = Campaign.GetCssValue("text-decoration");
-            CheckTextDecoration(CampaignStyle, "none");
+            string CampaignStyle = Campaign.GetAttribute("tagName");
+            CheckTextDecoration(CampaignStyle, "STRONG");
+            string CampaignSize = Campaign.GetCssValue("font-size");
+
+            CheckFontSize(PriceSize, CampaignSize);
 
             Assert.AreEqual(MainName, Name);
             Assert.AreEqual(MainPriceText, PriceText);
