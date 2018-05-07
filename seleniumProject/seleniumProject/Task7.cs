@@ -42,7 +42,7 @@ namespace seleniumProject
             for (int i = 0; i < menu.Count; i++)
             {
                 Browser.Navigate().GoToUrl(HrefObj[i]);
-                IList<IWebElement> menu1 = Browser.FindElements(By.XPath(".//*[@id = 'app-']//*[contains(@id, 'doc-')]"));
+                IList<IWebElement> menu1 = Browser.FindElements(By.XPath(".//*[contains(@id, 'doc-')]//a"));
                 List<string> HrefObj1 = new List<string>();
                 foreach (var element1 in menu1)
                     HrefObj1.Add(element1.GetAttribute("href"));

@@ -32,7 +32,7 @@ namespace seleniumProject
             for (int i = 0; i < Product.Count; i++)
             {
                 if (IsElementPresent(Product[i], By.XPath(".//div[contains(@class, 'sticker')]")) != true)
-                    Assert.Fail("Many stickers");
+                    Assert.Fail("Wrong quantity of stickers");
             }
 
         }
