@@ -17,7 +17,11 @@ namespace seleniumProject
             Browser = new ChromeDriver();
             Browser.Manage().Window.Maximize();
         }
-      
+
+        bool IsElementPresent(IWebDriver driver, By locator)
+        {
+            return driver.FindElements(locator).Count > 0;
+        }
 
         [TestMethod]
         public void Test7()
@@ -35,19 +39,27 @@ namespace seleniumProject
             enter.Click();
 
             IList<IWebElement> menu = Browser.FindElements(By.XPath(".//*[@id='box-apps-menu-wrapper']//a"));
-            List<string> HrefObj = new List<string>();
-            foreach (var element in menu)
-                HrefObj.Add(element.GetAttribute("href"));
+            IList<IWebElement> menu1 = Browser.FindElements(By.XPath(".//*[contains(@id, 'doc-')]//a"));
 
             for (int i = 0; i < menu.Count; i++)
             {
-                Browser.Navigate().GoToUrl(HrefObj[i]);
-                IList<IWebElement> menu1 = Browser.FindElements(By.XPath(".//*[contains(@id, 'doc-')]//a"));
-                List<string> HrefObj1 = new List<string>();
-                foreach (var element1 in menu1)
-                    HrefObj1.Add(element1.GetAttribute("href"));
-                for (int j = 0; j < menu1.Count; j++)
-                    Browser.Navigate().GoToUrl(HrefObj1[j]);
+                menu = Browser.FindElements(By.XPath(".//*[@id = 'app-']"));
+                menu[i].Click();
+                
+                menu = Browser.FindElements(By.XPath(".//*[@id = 'app-']"));
+                menu1 = Browser.FindElements(By.XPath(".//*[contains(@id, 'doc-')]"));
+                if (menu1.Count > 0)
+                {
+                    for(int j = 0; j < menu1.Count; j++)
+                    {
+                        menu = Browser.FindElements(By.XPath(".//*[@id = 'app-']"));
+                        menu1 = Browser.FindElements(By.XPath(".//*[contains(@id, 'doc-')]"));
+                        menu1[j].Click();
+                        Assert.IsTrue(IsElementPresent(Browser, By.CssSelector("h1")));
+                    }
+                }
+                else
+                    Assert.IsTrue(IsElementPresent(Browser, By.CssSelector("h1")));
             }
         }
         [TestCleanup]
