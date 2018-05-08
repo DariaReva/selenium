@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using OpenQA.Selenium.Html5;
 using System.Threading;
 using System.IO;
+using System.Linq;
+using OpenQA.Selenium.Support.UI;
 
 namespace seleniumProject
 {
@@ -35,6 +37,8 @@ namespace seleniumProject
         [TestMethod]
         public void Test12()
         {
+            WebDriverWait wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
+
             Browser.Navigate().GoToUrl("http://localhost/litecart/admin/");
             IWebElement input_login = Browser.FindElement(By.XPath(".//input[@name = 'username']"));
             input_login.Click();
@@ -52,7 +56,7 @@ namespace seleniumProject
             IWebElement input = Browser.FindElement(By.XPath(".//a[contains(@href, 'http://localhost/litecart/admin/?category_id=0&app=catalog&doc=edit_product')]"));
             input.Click();
 
-            input = Browser.FindElement(By.XPath(".//input[@value = '1']"));
+            input = Browser.FindElement(By.XPath(".//input[@name='status' and @value='1']"));
             input.Click();
             input = Browser.FindElement(By.XPath(".//input[@name = 'name[en]']"));
             input.SendKeys("Name");
@@ -63,8 +67,8 @@ namespace seleniumProject
             input = Browser.FindElement(By.XPath(".//input[@name = 'quantity']"));
             input.Clear();
             input.SendKeys("3");
-            input = Browser.FindElement(By.XPath(".//input[@name = 'new_images[]']"));
-            input.SendKeys(Directory.GetCurrentDirectory() + "//4-blue-duck-1.png");
+            //input = Browser.FindElement(By.XPath(".//input[@name = 'new_images[]']"));
+            //input.SendKeys(Directory.GetCurrentDirectory() + "//4-blue-duck-1.png");
 
             input = Browser.FindElement(By.XPath(".//input[@name = 'date_valid_from']"));
             input.SendKeys("2018-01-20");
@@ -98,7 +102,15 @@ namespace seleniumProject
 
             if (AreElementsPresent(Browser, By.XPath(".//a[contains(@href, 'http://localhost/litecart/admin/?app=catalog&doc=edit_product&category_id=0&product_id')]")) == false)
                 Assert.Fail("No items");
-
+            
+            input1 = Browser.FindElement(By.XPath(".//input[contains(@name, 'products')]"));
+            input1.Click();
+            IWebElement delete = Browser.FindElement(By.XPath(".//button[@name = 'delete']"));
+            delete.Click();
+            wait.Until(ExpectedConditions.AlertIsPresent());
+            IAlert alert = Browser.SwitchTo().Alert();
+            alert.Accept();
+            
         }
         [TestCleanup]
         public void Quit()
