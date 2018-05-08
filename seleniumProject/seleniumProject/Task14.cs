@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using System.Collections.Generic;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
@@ -17,6 +19,8 @@ namespace seleniumProject
         [TestInitialize]
         public void Initialize()
         {
+            //Browser = new InternetExplorerDriver();
+            //Browser = new FirefoxDriver();
             Browser = new ChromeDriver();
             Browser.Manage().Window.Maximize();
         }

@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using System.Collections.Generic;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
@@ -18,6 +20,8 @@ namespace seleniumProject
         public void Initialize()
         {
             Browser = new ChromeDriver();
+            //Browser = new InternetExplorerDriver();
+            //Browser = new FirefoxDriver();
             Browser.Manage().Window.Maximize();
         }
 
@@ -70,7 +74,7 @@ namespace seleniumProject
                 {
                     IWebElement last = ducks[ducks.Count - 1];
                     IWebElement input = Browser.FindElement(By.XPath(".//strong[contains(text(), '$')]"));
-                    wait.Until(d => d.FindElement(By.XPath(".//button[@name = 'remove_cart_item']")));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//button[@name = 'remove_cart_item']"))); 
                     IWebElement button = Browser.FindElement(By.XPath(".//button[@name = 'remove_cart_item']"));
                     button.Click();
                     wait.Until(ExpectedConditions.StalenessOf(last));

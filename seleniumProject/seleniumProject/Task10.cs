@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Firefox;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -18,6 +19,7 @@ namespace seleniumProject
         {
             Browser = new ChromeDriver();
             //Browser = new InternetExplorerDriver();
+            //Browser = new FirefoxDriver();
             Browser.Manage().Window.Maximize();
         }
        
@@ -27,6 +29,8 @@ namespace seleniumProject
             List<int> rgba = new List<int>();
             foreach (var element in sub)
                 rgba.Add(Convert.ToInt32(Regex.Replace(element, @"[^\d]+", "")));
+            if (rgba.Count == 2)
+                rgba.Add(1);
             for (int i = 0; i < (rgba.Count - 2); i++)
             {
                 if (rgba[i] != rgba[i + 1])
@@ -103,8 +107,8 @@ namespace seleniumProject
 
             Assert.AreEqual(Pointer, "http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1");
 
-            IWebElement NewItem = Browser.FindElement(By.XPath(".//h1[contains(text(), 'Yellow Duck')]"));
-            string Name = NewItem.GetAttribute("textContent");
+            IWebElement newitem = Browser.FindElement(By.XPath(".//h1[@class = 'title']"));
+            string Name = newitem.GetAttribute("textContent");
 
             IWebElement Price = Browser.FindElement(By.XPath(".//s[contains(@class, 'regular')]"));
             string PriceText = Price.GetAttribute("textContent");

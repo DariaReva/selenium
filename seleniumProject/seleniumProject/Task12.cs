@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Firefox;
 using System.Collections.Generic;
 using OpenQA.Selenium.Html5;
 using System.Threading;
@@ -20,6 +22,8 @@ namespace seleniumProject
         public void Initialize()
         {
             Browser = new ChromeDriver();
+            //Browser = new InternetExplorerDriver();
+            //Browser = new FirefoxDriver();
             Browser.Manage().Window.Maximize();
         }
 
