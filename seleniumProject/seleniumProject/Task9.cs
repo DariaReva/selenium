@@ -4,7 +4,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
